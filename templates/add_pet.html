@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<head>
+  <title>Добавить питомца</title>
+  <link rel="stylesheet" href="{% static 'add.css' %}">
+</head>
+<main>
+  <a href="javascript:history.back()" class="btn btn-secondary">Назад</a>
+    <form method="post" enctype="multipart/form-data">
+      <div class="placeholder">
+        <h2><a href="{% url 'profile' %}">Профиль</a> - <a href="{% url 'pet_list' %}">Мои питомцы</a> - Добавить питомца</h2>
+      </div>
+
+      <div class="add_form">
+        {% csrf_token %}
+        <p>Имя питомца</p>
+        {% render_field form.name placeholder=".." %}
+        <p>Питомец</p>
+        {% render_field form.animal_type placeholder=".." %}
+        <p>Порода</p>
+        {% render_field form.breed placeholder=".." %}
+        
+        <button type="submit">Добавить питомца</button>
+      </div>
+      </form>
+      
+      <script>
+        const breedSelect = document.querySelector('[name=breed]');
+        const animalSelect = document.querySelector('[name=animal_type]');
+      
+        const breeds = {
+          cat: {
+            persian: "Персидская",
+            siamese: "Сиамская",
+            scottish_fold: "Шотландская",
+            sphynx: "Сфинкс",
+            domestic_cat: "Домашняя"
+          },
+          dog: {
+            husky: "Хаски",
+            german_shepherd: "Овчарка",
+            poodle: "Пудель",
+            samoyed: "Самоед",
+            domestic_dog: "Домашняя"
+          }
+        };
+      
+        function updateBreeds() {
+          const selectedAnimal = animalSelect.value;
+          const currentBreed = breedSelect.value;
+      
+          // Очистка предыдущих опций
+          breedSelect.innerHTML = "";
+      
+          // Добавление новых опций
+          Object.entries(breeds[selectedAnimal]).forEach(([value, label]) => {
+            const option = document.createElement("option");
+            option.value = value;
+            option.textContent = label;
+            if (value === currentBreed) {
+              option.selected = true;
+            }
+            breedSelect.appendChild(option);
+          });
+        }
+      
+        animalSelect.addEventListener('change', updateBreeds);
+        document.addEventListener('DOMContentLoaded', updateBreeds); // при первой загрузке
+      </script>
+</main>
+
+{% include "footer.html" %}
+{% endblock %}

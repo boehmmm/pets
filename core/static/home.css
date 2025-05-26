@@ -1,0 +1,296 @@
+.mainthings{
+    background: linear-gradient(#FFCBA2 0%, #B27453 90%, #FFCBA2 100%);
+    display: flex;
+    justify-content: space-evenly;
+    padding-bottom: 30px;
+}
+
+.main_images img{
+    width: 450px;
+    height: 450px;
+}
+
+main{
+    padding: 0;
+    max-width: 100%;
+    background-color: #FFCBA2;
+}
+
+.main_texts{
+    background-color: rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    color: #B27453;
+    border-radius: 150px;
+    width: 38%;
+    text-align: center;
+    justify-content: center;
+    transform: rotate(-50deg);
+
+}
+.main_text_content{
+    transform: rotate(50deg);
+
+}
+
+.main_texts h2{
+    font-size: 45px;
+}
+
+.main_texts p{
+    margin-bottom: 30px;
+    font-size: 22px;
+}
+.main_button {
+    background-color: #B27453;
+    text-decoration: none;
+    color: #FFCBA2;
+    padding: 15px;
+    font-size: 24px;
+    border-radius: 20px;
+}
+
+.titles{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.recomendations{
+    padding: 10px 5%;
+}
+.title_text{
+    font-size: 42px;
+}
+
+.title_button{
+    background-color: #B27453;
+    display: flex;
+    padding: 5px;
+    gap: 30px;
+    border-radius: 40px;
+}
+.tab-button{
+    color:#B27453;
+    background-color: #FFCBA2;
+    padding: 5px 15px;
+    text-decoration: none;
+    border-radius: 40px;
+    font-size: 21px;
+}
+.tab-button.active{
+    background-color: white;
+}
+
+.iksweb{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border-collapse: separate;
+    border-spacing: 40px 10px;
+}
+
+
+.iksweb td{
+    max-width: 350px;
+    width: 350px;
+    height: 200px;
+    border-radius: 70px;
+    background-color: #B27453;
+}
+.table_img img{
+    width: 150px;
+    height: 150px;
+}
+.table{
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+.table_text{
+    color: #FFCBA2;
+    font-size: 25px;
+}
+
+@media screen and (max-width: 1050px) {
+    .mainthings {
+        align-items: center;
+        background: linear-gradient(#FFCBA2 0%, #B27453 95%, #FFCBA2 100%);
+      }
+    
+      .main_images img {
+        width: 120%;
+        height: auto;
+        max-width: 300px;
+      }
+    
+      .main_texts {
+        width: 90%;
+        border-radius: 50px;
+        transform: rotate(0deg);
+        margin: 20px 0;
+        padding: 20px;
+      }
+    
+      .main_text_content {
+        transform: rotate(0deg);
+      }
+    
+      .main_texts h2 {
+        font-size: 3rem;
+      }
+    
+      .main_texts p {
+        font-size: 1.5rem;
+      }
+    
+      .main_button {
+        font-size: 1rem;
+        padding: 10px 20px;
+      }
+    
+    
+      .title_text {
+        font-size: 28px;
+      }
+    
+      .title_button {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px;
+      }
+    
+      .tab-button {
+        font-size: 16px;
+        padding: 6px 12px;
+      }
+    
+      .iksweb {
+        flex-direction: column;
+        border-spacing: 10px 20px;
+      }
+    
+      .iksweb td {
+        
+        height: auto;
+        border-radius: 30px;
+      }
+  
+      .table{
+          display: block;
+          padding: 0;
+      }
+    
+      .table_img img {
+        width: 50%;
+        height: 50%;
+      }
+    
+      .table_text {
+        font-size: 1rem;
+        padding: 5px 0;
+      }
+}
+
+@media screen and (max-width: 550px){
+    .titles {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+      }
+}
+
+
+
+@media screen and (max-width: 480px) {
+    .mainthings {
+      align-items: center;
+      background: linear-gradient(#FFCBA2 0%, #B27453 95%, #FFCBA2 100%);
+    }
+  
+    .main_images img {
+      width: 120%;
+      height: auto;
+      max-width: 300px;
+    }
+  
+    .main_texts {
+      width: 90%;
+      border-radius: 50px;
+      transform: rotate(0deg);
+      margin: 20px 0;
+      padding: 20px;
+    }
+  
+    .main_text_content {
+      transform: rotate(0deg);
+    }
+  
+    .main_texts h2 {
+      font-size: 2rem;
+    }
+  
+    .main_texts p {
+      font-size: 1rem;
+    }
+  
+    .main_button {
+      font-size: 1rem;
+      padding: 10px 20px;
+    }
+  
+    .titles {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+    }
+  
+    .title_text {
+      font-size: 28px;
+    }
+  
+    .title_button {
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 10px;
+    }
+  
+    .tab-button {
+      font-size: 16px;
+      padding: 6px 12px;
+    }
+  
+    .iksweb {
+      flex-direction: column;
+      border-spacing: 10px 20px;
+    }
+  
+    .iksweb td {
+      
+      height: auto;
+      border-radius: 30px;
+    }
+
+    .table{
+        display: block;
+        padding: 0;
+    }
+  
+    .table_img img {
+      width: 50%;
+      height: 50%;
+    }
+  
+    .table_text {
+      font-size: 0.7rem;
+      padding: 5px 0;
+    }
+  }
+@media screen and (max-width: 350px) {
+    .main_button {
+        font-size: 0.9rem;
+        padding: 5px 10px;
+      }
+  }
+
+

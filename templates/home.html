@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<head>
+    <title>Главная</title>
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+</head>
+<main>
+    <div class="mainthings">
+        <div class="main_images">
+            <img src="{% static 'images/main.png' %}" alt="">
+        </div>
+
+        <div class="main_texts">
+            <div class="main_text_content">
+                <h2>Забота о питомцах <br>рядом с вами!</h2>
+                <p>Регистрируйте своего питомца. Читайте советы <br> и найдите ближайшую клинику</p>
+                {% if user.is_authenticated %}
+                <a href="{% url 'add_pet' %}" class="main_button">Создать профиль</a>
+                {% else %}
+                <a href="{% url 'login' %}" class="main_button">Войти</a>
+                {% endif %}
+            </div>
+            
+
+        </div>
+    </div>
+    <div class="recomendations">
+        <div class="titles">
+            <div class="title_text">Полезные рекомендации:</div>
+        </div>
+        <div class="blocks">
+            <div class="first_block content-block">
+                <table class="iksweb">
+                    <tr>
+                        <td onclick="window.location.href='{% url 'recommendations' %}'" style="cursor: pointer;">
+                            <div class="table">
+                                <div class="table_img">
+                                    <img src="{% static 'images/veterinar.png' %}" alt="">
+                                </div>
+                                <div class="table_text">
+                                    Подготовка к приему у ветеринара
+                                </div>
+                            </div>
+                            
+                        </td>
+
+                        <td onclick="window.location.href='{% url 'recommendations' %}'" style="cursor: pointer;">
+                            <div class="table">
+                                <div class="table_img">
+                                    <img src="{% static 'images/ill.png' %}" alt="">
+                                </div>
+                                <div class="table_text">
+                                    Профилактика заболеваний
+                                </div>
+                            </div>
+                        </td>
+
+                        <td onclick="window.location.href='{% url 'recommendations' %}'" style="cursor: pointer;">
+                            <div class="table">
+                                <div class="table_img">
+                                    <img src="{% static 'images/paw.png' %}" alt="">
+                                </div>
+                                <div class="table_text">
+                                    Уход за когтями и лапами
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td onclick="window.location.href='{% url 'recommendations' %}'" style="cursor: pointer;">
+                            <div class="table">
+                                <div class="table_img">
+                                    <img src="{% static 'images/game.svg' %}" alt="">
+                                </div>
+                                <div class="table_text">
+                                    Поддержание активности и игры
+                                </div>
+                            </div>
+                        </td>
+                        <td onclick="window.location.href='{% url 'recommendations' %}'" style="cursor: pointer;">
+                            <div class="table">
+                                <div class="table_img">
+                                    <img src="{% static 'images/food.png' %}" alt="">
+                                </div>
+                                <div class="table_text">
+                                    Особеннности кормления
+                                </div>
+                            </div>
+                        </td>
+                        <td onclick="window.location.href='{% url 'recommendations' %}'" style="cursor: pointer;">
+                            <div class="table">
+                                <div class="table_img">
+                                    <img src="{% static 'images/dog6.png' %}" alt="">
+                                </div>
+                                <div class="table_text">
+                                    Советы по воспитанию
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+            </table>    
+            </div>
+        </div>
+    </div>    
+</main>
+
+{% include "footer.html" %}
+
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<head>
+    <title>Записи о здоровье</title>
+    <link rel="stylesheet" href="{% static 'add.css' %}">
+    <link rel="stylesheet" href="{% static 'petlist.css' %}">
+</head>
+<main>
+    <div class="placeholder">
+        <h2><a href="{% url 'profile' %}">Профиль</a> - <a href="{% url 'pet_list' %}">Мои питомцы</a> - Записи о здоровье — {{ pet.name }}</h2>
+      </div>
+      <a href="{% url 'add_health_record' pet.id %}" class="addbutton"><i class="fa-solid fa-plus"></i> Добавить запись</a>
+    
+    <div class="pet_record">
+        {% for record in records %}
+        <div class="record_info">
+            <div class="record_name">
+                <p class="gray">{{ record.visit_date }}</p>
+                <i class="fa-solid fa-trash-can delete-note-icon" data-id="{{record.id}}"></i>
+            </div>
+            <div class="record_descr">
+                <p>{{ record.description }}</p>
+            </div>
+        </div>
+        {% empty %}
+            <p>Записей нет.</p>
+        {% endfor %}
+    </div>
+    <script src="https://kit.fontawesome.com/7200c5296d.js" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteIcons = document.querySelectorAll('.delete-note-icon');
+        
+            deleteIcons.forEach(icon => {
+                icon.addEventListener('click', function () {
+                    const recordId = this.dataset.id;
+        
+                    if (!confirm('Удалить эту запись?')) return;
+        
+                    fetch(`/delete-health-record/${recordId}/`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': getCookie('csrftoken'),
+                            'Content-Type': 'application/json'
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(data.message);
+                        if (data.message === 'Запись удалена!') {
+                            this.closest('.record_info').remove();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Ошибка при удалении:', error);
+                    });
+                });
+            });
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+        });
+        </script>
+</main>
+
+{% include "footer.html" %}
+
+{% endblock %}

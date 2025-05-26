@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<head>
+  <title>Добавить питомца</title>
+  <link rel="stylesheet" href="{% static 'add.css' %}">
+</head>
+<main>
+    <a href="javascript:history.back()" class="btn btn-secondary">Назад</a>
+    <h2>Добавить запись о здоровье</h2>
+    <form method="post">
+        <div class="add_form">
+            {% csrf_token %}
+            <p>Почта для связи</p>
+            {% render_field form.mail placeholder=".." %}
+            <p>Краткое описание проблемы</p>
+            {% render_field form.description placeholder=".." %}
+
+            <button type="submit">Сохранить</button>
+        </div>
+        
+    </form>
+</main>
+
+{% include "footer.html" %}
+
+{% endblock %}

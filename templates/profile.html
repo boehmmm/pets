@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<head>
+    <title>Профиль</title>
+    <link rel="stylesheet" href="{% static 'profile.css' %}" />
+    
+</head>
+<main>
+    <div class="placeholder">
+        <h2>Профиль - <a href="{% url 'pet_list' %}">Мои питомцы</a></h2>
+    </div>
+    <form method="post">
+    
+        {% csrf_token %}
+
+    <div class="mainprofile">
+        <div class="avatar">
+            <img src="{% static 'images/avatar.png' %}" alt="">
+        </div>
+
+        <div class="usernames">
+            <p class="username">{{ user.username }}</p>
+            <p class="birthday" id="edit_birth_icon">{{ profile.birth_date }} <i class="fa-solid fa-pen"></i></p>
+            <input type="date" name="birth_date" id="birth_input" value="{{ profile.birth_date }}" style="display:none;">
+        </div>
+    </div>
+
+    <div class="names">
+        <div class="first_name">
+            <p class="minitext">Имя</p>
+            <input type="text" name="first_name" value="{{ profile.first_name }}">
+        </div>
+        <div class="last_name">
+            <p class="minitext">Фамилия</p>
+            <input type="text" name="last_name" value="{{ profile.last_name }}">
+        </div>
+        <div class="patronymic">
+            <p class="minitext">Отчество</p>
+            <input type="text" name="patronymic" value="{{ profile.patronymic }}">
+        </div>
+        
+    </div>
+
+    <h2>Смена пароля</h2>
+    <div class="passwords">
+        
+        <div class="first_password">
+            <p class="minitext">Новый пароль</p>
+            <input type="password" name="new_password">
+        </div>
+
+        <div class="second_password">
+            <p class="minitext">Подтверждение нового пароля</p>
+            <input type="password" name="confirm_password">
+        </div>
+    </div>
+        <button type="submit">Сохранить</button>
+    </form>
+    <script src="https://kit.fontawesome.com/7200c5296d.js" crossorigin="anonymous"></script>
+    <script src="{% static 'edit.js' %}" ></script>
+</main>
+{% include "footer.html" %}
+
+{% endblock %}

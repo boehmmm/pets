@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Регистрация пользователя</title>
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+<body>
+
+  <header>
+    <div class="header-content">
+      <div class="heart-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+                   2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09
+                   C13.09 3.81 14.76 3 16.5 3
+                   19.58 3 22 5.42 22 8.5
+                   c0 3.78-3.4 6.86-8.55 11.54
+                   L12 21.35z" fill="#A67C5B"/>
+        </svg>
+      </div>
+      <h1>Добро пожаловать, любитель питомцев!</h1>
+      <a href="/login" class="login-button">Войти</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="registration-container">
+      <div class="registration-form">
+        <h2>Регистрация нового пользователя</h2>
+        <form action="#" method="post">
+          <label for="username">Имя пользователя:</label>
+          <input type="text" id="username" name="username" required placeholder="Введите имя пользователя" />
+
+          <label for="password">Пароль:</label>
+          <input type="password" id="password" name="password" required placeholder="Введите ваш пароль" />
+
+          <label for="confirm-password">Подтверждение пароля:</label>
+          <input type="password" id="confirm-password" name="confirm-password" required placeholder="Повторите пароль" />
+
+          <button type="submit">Зарегистрироваться</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Забота о питомцах. Все права защищены.
+  </footer>
+
+</body>
+</html>

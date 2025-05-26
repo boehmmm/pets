@@ -1,0 +1,76 @@
+<h2>Записаться на приём для питомца {{ pet.name }}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    
+    <div class="form-group">
+        <label for="clinic">Выберите клинику:</label>
+        <select name="clinic" id="clinic" class="form-control" required>
+            {% for clinic in clinics %}
+                <option value="{{ clinic }}">{{ clinic }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="date">Выберите дату:</label>
+        <select name="date" id="date" class="form-control" required>
+            {% for date in available_times.keys %}
+                <option value="{{ date|date:'d F Y' }}">{{ date|date:"l, d F Y" }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="time">Выберите время:</label>
+        <select name="time" id="time" class="form-control" required>
+            <!-- Будет заполняться JavaScript'ом -->
+            <option value="">Сначала выберите дату</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Записаться</button>
+</form>
+
+<h3>Записи на приём:</h3>
+{% if health_records %}
+    <ul class="list-group">
+        {% for record in health_records %}
+            <li class="list-group-item">
+                {{ record.clinic }} - {{ record.date|date:"d.m.Y H:i" }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <div class="alert alert-info">У вас нет записей на приём для этого питомца.</div>
+{% endif %}
+
+<script>
+document.getElementById('date').addEventListener('change', function() {
+    const date = this.value;
+    const timeSelect = document.getElementById('time');
+    timeSelect.innerHTML = '<option value="">Выберите время</option>';
+    
+    // Получаем доступные времена для выбранной даты
+    const availableTimes = {
+        {% for date, slots in available_times.items %}
+            "{{ date|date:'d F Y' }}": [
+                {% for slot in slots %}
+                    {% if slot.available %}
+                        "{{ slot.time }}",
+                    {% endif %}
+                {% endfor %}
+            ],
+        {% endfor %}
+    };
+    
+    if (availableTimes[date]) {
+        availableTimes[date].forEach(time => {
+            const option = document.createElement('option');
+            option.value = time;
+            option.textContent = time;
+            timeSelect.appendChild(option);
+        });
+    }
+});
+</script>

@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<head>
+    <title>Редактировать питомца</title>
+    <link rel="stylesheet" href="{% static 'profile.css' %}">
+</head>
+<main>
+  <a href="javascript:history.back()" class="btn btn-secondary">Назад</a>
+    <form method="post" enctype="multipart/form-data">
+      <div class="placeholder">
+        <h2><a href="{% url 'profile' %}">Профиль</a> - <a href="{% url 'pet_list' %}">Мои питомцы</a> - Редактировать питомца</h2>
+      </div>
+    
+        {% csrf_token %}
+
+    <div class="pet_mainprofile">
+      <div class="pet_av">
+        <img id="preview" src="{{ pet.photo.url }}" alt="Pet photo">
+        <div class="centered" id="upload-area">
+          <label for="photo-upload" id="edit-button">✏️</label>
+          <input type="file" name="photo" id="photo-upload" style="display: none;">
+        </div>
+      </div>
+
+        <div class="pet_names">
+          <div class="first_name">
+              <p class="minitext">Имя</p>
+              {% render_field form.name placeholder=".." %}
+          </div>
+          <div class="last_name">
+              <p class="minitext">Возраст</p>
+              {% render_field form.age placeholder=".." %}
+          </div>
+          <div class="patronymic">
+              <p class="minitext">Вес</p>
+              {% render_field form.weight placeholder=".." %}
+          </div>
+          
+      </div>
+    </div>
+
+    <div class="pet_selection">
+        
+        <div class="pet_type">
+            <p class="minitext">Тип животного</p>
+            {% render_field form.animal_type placeholder=".." %}
+        </div>
+
+        <div class="pet_breed">
+            <p class="minitext">Порода</p>
+            {% render_field form.breed placeholder=".." %}
+        </div>
+    </div>
+        <button type="submit">Сохранить</button>
+    </form>
+      
+      <script>
+        const breedSelect = document.querySelector('[name=breed]');
+        const animalSelect = document.querySelector('[name=animal_type]');
+      
+        const breeds = {
+          cat: {
+            persian: "Персидская",
+            siamese: "Сиамская",
+            scottish_fold: "Шотландская",
+            sphynx: "Сфинкс",
+            domestic_cat: "Домашняя"
+          },
+          dog: {
+            husky: "Хаски",
+            german_shepherd: "Овчарка",
+            poodle: "Пудель",
+            samoyed: "Самоед",
+            domestic_dog: "Домашняя"
+          }
+        };
+      
+        function updateBreeds() {
+          const selectedAnimal = animalSelect.value;
+          const currentBreed = breedSelect.value;
+      
+          breedSelect.innerHTML = "";
+      
+          Object.entries(breeds[selectedAnimal]).forEach(([value, label]) => {
+            const option = document.createElement("option");
+            option.value = value;
+            option.textContent = label;
+            if (value === currentBreed) {
+              option.selected = true;
+            }
+            breedSelect.appendChild(option);
+          });
+        }
+      
+        animalSelect.addEventListener('change', updateBreeds);
+        document.addEventListener('DOMContentLoaded', updateBreeds);
+      </script>
+
+<script>
+  const imgContainer = document.querySelector('.pet_av');
+  const editButton = document.getElementById('edit-button');
+  const uploadArea = document.getElementById('upload-area')
+
+  imgContainer.addEventListener('mouseenter', () => {
+      uploadArea.style.display = 'flex';
+  });
+  imgContainer.addEventListener('mouseleave', () => {
+      uploadArea.style.display = 'none';
+  });
+
+  document.getElementById('upload-area').addEventListener('click', () => {
+    document.getElementById('photo-upload').click();
+});
+</script>
+
+<script>
+  const photoInput = document.getElementById('photo-upload');
+  const previewImage = document.getElementById('preview');
+
+  photoInput.addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        previewImage.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+</script>
+
+
+</main>
+
+
+{% include "footer.html" %}
+
+{% endblock %}

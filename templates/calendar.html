@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'calendar.css' %}">
+    <!-- JS -->
+    <script src="https://kit.fontawesome.com/7200c5296d.js" crossorigin="anonymous"></script>
+    <script src="{% static 'fullcalendar/core/index.global.js' %}"></script>
+    <script src="{% static 'fullcalendar/daygrid/index.global.js' %}"></script>
+    <script src="{% static 'fullcalendar/interaction/index.global.js' %}"></script>
+    <script src="{% static 'fullcalendar/core/locales/ru.global.js' %}"></script>
+</head>
+<body>
+    <a href="javascript:history.back()" style="text-align: center; display: flex; flex-direction: column; margin-top: 30px; color: #5C4433;">Назад</a>
+    <h1 class="just_title">Календарь заметок для питомцев</h1>
+
+    <div id="calendar"></div>
+
+    <div id="add-note-modal" class="modal" style="display: none;">
+        <div class="form">
+            <form id="add-note-form" method="post">
+                {% csrf_token %}
+                <label for="pet">Питомец:</label>
+                <select name="pet" id="pet">
+                    {% for pet in pets %}
+                        <option value="{{ pet.id }}">{{ pet.name }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <label for="title">Заметка:</label>
+                <input type="text" name="title" id="title" required>
+                <br>
+                <label for="date">Дата:</label>
+                <input type="date" name="date" id="date" required>
+                <br>
+                <label for="time">Время:</label>
+                <input type="time" name="time" id="time" required>
+                <br>
+                <button type="submit">Сохранить</button>
+                <div id="close-modal">Закрыть</div>
+            </form>
+            
+        </div>
+    </div>
+
+    <div id="note-list-modal" class="modal_list" style="display: none;">
+        <div class="form">
+            <h3>Заметки на <span id="note-date"></span></h3>
+            <div id="notes-container"></div>
+            <hr>
+            <button id="open-add-note-modal">Добавить заметку</button>
+            <button id="close-note-list-modal">Закрыть</button>
+        </div>
+    </div>
+
+    <div id="delete-note-modal" class="modal" style="display: none;">
+        <div class="form">
+            <h3>Удалить заметку</h3>
+            <p>Вы уверены, что хотите удалить эту заметку?</p>
+            <button id="delete-note">Удалить</button>
+            <button id="close-delete-modal">Отмена</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+    
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: '/get_notes/',
+                dayMaxEventRows: 3,
+                fixedWeekCount: false,
+                locale: 'ru',
+    
+                dateClick: function(info) {
+                    const dateStr = info.dateStr;
+                    document.getElementById('note-date').textContent = dateStr;
+                    document.getElementById('note-list-modal').style.display = 'flex';
+    
+                    fetch(`/get_notes_by_date/?date=${dateStr}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const container = document.getElementById('notes-container');
+                            container.innerHTML = '';
+    
+                            if (data.notes.length === 0) {
+                                container.innerHTML = '<p>Нет заметок на этот день.</p>';
+                            } else {
+                                data.notes.forEach(note => {
+                                    const noteDiv = document.createElement('div');
+                                    noteDiv.classList.add('single-note');
+    
+                                    noteDiv.innerHTML = `
+                                        <div class="upper">
+                                            <div class="note_name">
+                                                <div class="pet_name">
+                                                    <p>${note.pet_name}</p>
+                                                </div>
+                                                <div class="note_time">
+                                                    <p>${note.time}</p>
+                                                </div>
+                                            </div>
+                                            <div class="delete_button">
+                                                <i class="fa-solid fa-trash-can delete-note-icon" data-id="${note.id}"></i>
+                                            </div>
+                                        </div>
+                                        <div class="note_text">
+                                            <p>${note.title}</p>
+                                        </div>
+                                    `;
+    
+                                    container.appendChild(noteDiv);
+                                });
+    
+                                // Навешиваем обработчики на иконки удаления
+                                document.querySelectorAll('.delete-note-icon').forEach(icon => {
+                                    icon.addEventListener('click', function() {
+                                        const noteId = this.getAttribute('data-id');
+                                        fetch(`/delete_note/${noteId}/`, {
+                                            method: 'GET',
+                                        }).then(response => response.json())
+                                          .then(data => {
+                                              if (data.message) {
+                                                  calendar.refetchEvents();
+                                                  this.closest('.single-note').remove();
+                                              } else {
+                                                  alert(data.error);
+                                              }
+                                          });
+                                    });
+                                });
+                            }
+                        });
+                }
+            });
+    
+            document.getElementById('add-note-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+    
+                var formData = new FormData(this);
+                fetch('/add_note/', {
+                    method: 'POST',
+                    body: formData,
+                }).then(response => response.json())
+                  .then(data => {
+                      if (data.message) {
+                          calendar.refetchEvents();
+                          document.getElementById('add-note-modal').style.display = 'none';
+                          alert(data.message);
+                      } else if (data.error) {
+                          alert(data.error);
+                      }
+                  })
+                  .catch(error => {
+                      alert('Произошла ошибка при добавлении заметки.');
+                  });
+            });
+    
+            document.getElementById('close-modal').addEventListener('click', function() {
+                document.getElementById('add-note-modal').style.display = 'none';
+            });
+    
+            document.getElementById('close-delete-modal').addEventListener('click', function() {
+                document.getElementById('delete-note-modal').style.display = 'none';
+            });
+    
+            document.getElementById('delete-note').addEventListener('click', function() {
+                var noteId = this.getAttribute('data-id');
+                fetch(`/delete_note/${noteId}/`, {
+                    method: 'GET',
+                }).then(response => response.json())
+                  .then(data => {
+                      if (data.message) {
+                          calendar.refetchEvents();
+                          document.getElementById('delete-note-modal').style.display = 'none';
+                          alert(data.message);
+                      } else if (data.error) {
+                          alert(data.error);
+                      }
+                  })
+                  .catch(error => {
+                      alert('Произошла ошибка при удалении заметки.');
+                  });
+            });
+    
+            document.getElementById('close-note-list-modal').addEventListener('click', function() {
+                document.getElementById('note-list-modal').style.display = 'none';
+            });
+    
+            document.getElementById('open-add-note-modal').addEventListener('click', function() {
+                document.getElementById('add-note-modal').style.display = 'flex';
+                document.getElementById('note-list-modal').style.display = 'none';
+    
+                const date = document.getElementById('note-date').textContent;
+                document.getElementById('date').value = date;
+            });
+    
+            calendar.render();
+        });
+    </script>
+    
+</body>
+
+{% include "footer.html" %}
+
+{% endblock %}
+
+

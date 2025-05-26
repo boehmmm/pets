@@ -1,0 +1,66 @@
+.add_form{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: 0 auto;
+}
+
+.add_form p{
+    margin-bottom: 10px;
+}
+
+.add_form input{
+    width: 100%;
+  padding: 10px 12px;
+  margin: 0px 0 20px;
+  background: #ffffff;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+.add_form select{
+    width: 100%;
+  padding: 10px 12px;
+  margin: 0px 0 20px;
+  background: #ffffff;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.add_form button{
+    background-color: #A67C5B;
+  color: white;
+  padding: 12px;
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 30px;
+}
+
+.registration-form button:hover {
+  background-color: #FCE8D5;
+}
+
+.placeholder a{
+    text-decoration: none;
+}
+
+.add_form textarea{
+    width: 100%;
+    height: 100px;
+    padding: 10px 12px;
+    margin: 0px 0 20px;
+    background: #ffffff;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+    resize: none;
+}
+

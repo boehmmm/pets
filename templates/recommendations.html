@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<head>
+  <meta charset="UTF-8">
+  <title>Рекомендации для питомцев</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'rec.css' %}">
+</head>
+
+<main>
+  <a href="javascript:history.back()" class="btn btn-secondary">Назад</a>
+<div class="burger" id="burger" onclick="toggleSidebar()">
+  <i class="fas fa-bars"></i>
+</div>
+
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="container">
+  <div class="sidebar" id="sidebar">
+    <button class="close-btn" onclick="toggleSidebar()">✖</button>
+    <div class="sidebar-scroll">
+      <h2>Полезные рекомендации:</h2>
+
+      <!-- Фильтры -->
+      <div class="tag-filter">
+        <input type="text" id="tagSearch" placeholder="Поиск по тегам..." oninput="applyFilters()">
+        <select id="ageFilter" onchange="applyFilters()">
+          <option value="">Возраст</option>
+          <option value="щенок">Щенки</option>
+          <option value="котенок">Котята</option>
+          <option value="взрослый">Взрослые</option>
+        </select>
+        <select id="breedFilter" onchange="applyFilters()">
+          <option value="">Порода</option>
+          <!-- Породы собак -->
+          <option value="овчарка">Овчарка</option>
+          <option value="самоед">Самоед</option>
+          <option value="пудель">Пудель</option>
+          <option value="хаски">Хаски</option>
+          <!-- Породы кошек -->
+          <option value="персидский">Персидский</option>
+          <option value="сиамский">Сиамский</option>
+          <option value="сфинкс">Сфинкс</option>
+          <option value="шотландец">Шотландец</option>
+        </select>
+      </div>
+
+      <!-- Меню -->
+      <div class="menu" id="menu">
+        <!-- Профилактика заболеваний -->
+        <div class="menu-section">
+          <button onclick="toggleSubtopics(this)"><i class="fas fa-shield-alt"></i> Профилактика заболеваний</button>
+          <div class="subtopics">
+            <button onclick="showContent('Вакцинация собак')" data-tags="здоровье,вакцинация,болезни,собаки" data-age="щенок" data-breed="овчарка,самоед,пудель,хаски,дворняга">Вакцинация (собаки)</button>
+            <button onclick="showContent('Вакцинация кошек')" data-tags="здоровье,вакцинация,болезни,кошки" data-age="котенок" data-breed="персидский,сиамский,сфинкс,шотландец">Вакцинация (кошки)</button>
+            <button onclick="showContent('Обработка от паразитов собак')" data-tags="паразиты,здоровье,профилактика,собаки" data-age="взрослый" data-breed="овчарка,самоед,пудель,хаски,дворняга">Обработка от паразитов (собаки)</button>
+            <button onclick="showContent('Обработка от паразитов кошек')" data-tags="паразиты,здоровье,профилактика,кошки" data-age="взрослый" data-breed="персидский,сиамский,сфинкс,шотландец">Обработка от паразитов (кошки)</button>
+          </div>
+        </div>
+
+        <!-- Подготовка к ветеринару -->
+        <div class="menu-section">
+          <button onclick="toggleSubtopics(this)"><i class="fas fa-user-md"></i> Подготовка к ветеринару</button>
+          <div class="subtopics">
+            <button onclick="showContent('Как подготовить щенка')" data-tags="ветеринар,щенок,подготовка,собаки" data-age="щенок" data-breed="овчарка,самоед,пудель,хаски,дворняга">Подготовка щенка</button>
+            <button onclick="showContent('Как подготовить котенка')" data-tags="ветеринар,котенок,подготовка,кошки" data-age="котенок" data-breed="персидский,сиамский,сфинкс,шотландец">Подготовка котенка</button>
+            <button onclick="showContent('Документы и прививки собак')" data-tags="документы,прививки,ветеринар,собаки" data-age="взрослый" data-breed="овчарка,самоед,пудель,хаски,дворняга">Документы (собаки)</button>
+            <button onclick="showContent('Документы и прививки кошек')" data-tags="документы,прививки,ветеринар,кошки" data-age="взрослый" data-breed="персидский,сиамский,сфинкс,шотландец">Документы (кошки)</button>
+          </div>
+        </div>
+
+        <!-- Особенности кормления -->
+        <div class="menu-section">
+          <button onclick="toggleSubtopics(this)"><i class="fas fa-utensils"></i> Особенности кормления</button>
+          <div class="subtopics">
+            <button onclick="showContent('Сухой корм vs натуральный для собак')" data-tags="питание,корм,диета,собаки" data-age="взрослый" data-breed="овчарка,самоед,пудель,хаски,дворняга">Кормление (собаки)</button>
+            <button onclick="showContent('Сухой корм vs натуральный для кошек')" data-tags="питание,корм,диета,кошки" data-age="взрослый" data-breed="персидский,сиамский,сфинкс,шотландец">Кормление (кошки)</button>
+            <button onclick="showContent('График кормления собак')" data-tags="расписание,еда,режим,собаки" data-age="щенок" data-breed="овчарка,самоед,пудель,хаски,дворняга">График кормления (собаки)</button>
+            <button onclick="showContent('График кормления кошек')" data-tags="расписание,еда,режим,кошки" data-age="котенок" data-breed="персидский,сиамский,сфинкс,шотландец">График кормления (кошки)</button>
+          </div>
+        </div>
+          
+        <!-- Активность и игры -->
+        <div class="menu-section">
+          <button onclick="toggleSubtopics(this)"><i class="fas fa-running"></i> Активность и игры</button>
+          <div class="subtopics">
+            <button onclick="showContent('Игры для щенков')" data-tags="активность,игры,щенок,собаки" data-age="щенок" data-breed="овчарка,самоед,пудель,хаски">Игры для щенков</button>
+            <button onclick="showContent('Игры для котят')" data-tags="активность,игры,котенок,кошки" data-age="котенок" data-breed="персидский,сиамский,сфинкс,шотландец">Игры для котят</button>
+            <button onclick="showContent('Тренировки для взрослых собак')" data-tags="активность,тренировки,взрослый,собаки" data-age="взрослый" data-breed="овчарка,самоед,пудель,хаски">Тренировки (собаки)</button>
+            <button onclick="showContent('Развлечения для взрослых кошек')" data-tags="активность,игры,взрослый,кошки" data-age="взрослый" data-breed="персидский,сиамский,сфинкс,шотландец">Развлечения (кошки)</button>
+          </div>
+        </div>
+        
+        <!-- Уход -->
+        <div class="menu-section">
+          <button onclick="toggleSubtopics(this)"><i class="fas fa-paw"></i> Уход</button>
+          <div class="subtopics">
+            <button onclick="showContent('Стрижка когтей у собак')" data-tags="уход,когти,лапы,собаки" data-age="взрослый" data-breed="овчарка,самоед,пудель,хаски">Когти (собаки)</button>
+            <button onclick="showContent('Стрижка когтей у кошек')" data-tags="уход,когти,кошки" data-age="взрослый" data-breed="персидский,сиамский,сфинкс,шотландец">Когти (кошки)</button>
+            <button onclick="showContent('Уход за подушечками у собак')" data-tags="уход,лапы,подушечки,собаки" data-age="взрослый" data-breed="овчарка,самоед,пудель,хаски">Подушечки лап (собаки)</button>
+            <button onclick="showContent('Уход за подушечками у кошек')" data-tags="уход,когти,воспитание,кошки" data-age="котенок" data-breed="персидский,сиамский,сфинкс,шотландец">Подушечки лап (кошки)</button>
+          </div>
+        </div>
+        
+        <!-- Воспитание -->
+        <div class="menu-section">
+          <button onclick="toggleSubtopics(this)"><i class="fas fa-graduation-cap"></i> Воспитание</button>
+          <div class="subtopics">
+            <button onclick="showContent('Основы послушания собак')" data-tags="воспитание,щенок,послушание,собаки" data-age="щенок" data-breed="все">Послушание (собаки)</button>
+            <button onclick="showContent('Приучение к туалету собак')" data-tags="воспитание,щенок,туалет,собаки" data-age="щенок" data-breed="все">Туалет (собаки)</button>
+            <button onclick="showContent('Приучение к лотку кошек')" data-tags="воспитание,котенок,лоток,кошки" data-age="котенок" data-breed="все">Лоток (кошки)</button>
+            <button onclick="showContent('Социализация собак')" data-tags="воспитание,щенок,социализация,собаки" data-age="щенок" data-breed="все">Социализация (собаки)</button>
+          </div>
+        </div>
+        
+        <!-- Породы -->
+        <div class="menu-section">
+          <button onclick="toggleSubtopics(this)"><i class="fas fa-paw"></i> Породы</button>
+          <div class="subtopics">
+            <!-- Породы собак -->
+            <button onclick="showContent('Немецкая овчарка')" data-tags="порода,крупные,собаки" data-age="взрослый" data-breed="овчарка">Немецкая овчарка</button>
+            <button onclick="showContent('Самоед')" data-tags="порода,северные,собаки" data-age="взрослый" data-breed="самоед">Самоед</button>
+            <button onclick="showContent('Хаски')" data-tags="порода,активные,собаки" data-age="взрослый" data-breed="хаски">Хаски</button>
+            <button onclick="showContent('Пудель')" data-tags="порода,активные,собаки" data-age="взрослый" data-breed="пудель">Пудель</button>
+            <!-- Породы кошек -->
+            <button onclick="showContent('Шотландец')" data-tags="порода,короткошерстные,кошки" data-age="взрослый" data-breed="шотландец">Шотландец</button>
+            <button onclick="showContent('Сиамский')" data-tags="порода,крупные,кошки" data-age="взрослый" data-breed="сиамский">Сиамский</button>
+            <button onclick="showContent('Сфинкс')" data-tags="порода,бесшерстные,кошки" data-age="взрослый" data-breed="сфинкс">Сфинкс</button>
+            <button onclick="showContent('Персидский')" data-tags="порода,бесшерстные,кошки" data-age="взрослый" data-breed="персидский">Персидский</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+    <h1 id="content-title">Рекомендации для питомцев</h1>
+    <hr>
+    <div class="content-box" id="content">
+      Выберите категорию, чтобы получить рекомендации по уходу за собаками или кошками.
+    </div>
+  </div>
+</div>
+<script src="{% static 'rec.js' %}"></script>
+          
+</main>
+{% include "footer.html" %}
+
+{% endblock %}

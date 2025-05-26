@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<main>
+    <!-- <div class="breadcrumps">
+        <a href="/profile/">Профиль</a> - <p class="breadcrumps_text">Редактировать профиль</p>
+    </div> -->
+    <h2>Профиль</h2>
+    <form method="post">
+        {% csrf_token %}
+        {% render_field form.first_name placeholder="Введите имя пользователя" %}
+        {{ form.as_p }}
+        <button type="submit">Сохранить</button>
+    </form>
+</main>
+{% include "footer.html" %}
+
+{% endblock %}

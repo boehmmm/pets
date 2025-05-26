@@ -1,0 +1,37 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Вход</title>
+    <link rel="stylesheet" href="{% static 'register_login.css' %}" />
+  </head>
+
+
+    <main>
+        <div class="registration-container">
+          <div class="registration-form">
+            <h2>Авторизация пользователя</h2>
+            <form method="post">
+                {% csrf_token %}
+              <label for="username">Имя пользователя:</label>
+              <input type="text" name="username" placeholder="Имя пользователя"><br>
+    
+              <label for="password">Пароль:</label>
+              <input type="password" name="password" placeholder="Пароль"><br>
+    
+              <button type="submit">Войти</button>
+                
+              <a href="/register/">Нет аккаунта?</a>
+            </form>
+          </div>
+        </div>
+      </main>
+</form>
+{% include "footer.html" %}
+
+{% endblock %}

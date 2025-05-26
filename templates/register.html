@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Регистрация пользователя</title>
+    <link rel="stylesheet" href="{% static 'register_login.css' %}" />
+  </head>
+
+
+    <main>
+      
+        <div class="registration-container">
+          <div class="registration-form">
+            <h2>Регистрация нового пользователя</h2>
+            <form method="post">
+                {% csrf_token %}
+              <label for="username">Имя пользователя:</label>
+              {% render_field form.username placeholder="Введите имя пользователя" %}
+              <label for="email">Почта:</label>
+              {% render_field form.email class="form-control" placeholder="Введите вашу почту" %}
+              <label for="password">Пароль:</label>
+              {% render_field form.password1 class="form-control" placeholder="Введите ваш пароль" %}
+    
+              <label for="confirm-password">Подтверждение пароля:</label>
+              {% render_field form.password2 class="form-control" placeholder="Повторите ваш пароль" %}
+    
+              <button type="submit">Зарегистрироваться</button>
+
+              <a href="/login/">Есть аккаунт?</a>
+
+              
+            </form>
+            {% if show_modal %}
+      <div id="modal" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:#000a;display:flex;justify-content:center;align-items:center;">
+        <form method="post" action="{% url 'register' %}" style="background:white;padding:20px;border-radius:10px;">
+          {% csrf_token %}
+          <h3>Введите код подтверждения</h3>
+          <input type="text" name="code" placeholder="Код из email" required>
+          <button type="submit">Подтвердить</button>
+          {% if form.errors.code %}
+            <p style="color:red;">{{ form.errors.code.0 }}</p>
+          {% endif %}
+        </form>
+      </div>
+      {% endif %}
+          </div>
+        </div>
+      </main>
+</form>
+{% include "footer.html" %}
+
+{% endblock %}
