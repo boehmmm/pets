@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--w*h_g5$8g6x@5z^8%yahw88&@!xe6)&w_gg*h5#5az+_=5bez'
+SECRET_KEY = "django-insecure--w*h_g5$8g6x@5z^8%yahw88&@!xe6)&w_gg*h5#5az+_=5bez"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -132,7 +132,8 @@ CSRF_TRUSTED_ORIGINS = [
     'https://fefb-62-84-32-253.ngrok-free.app',
     'https://e349-62-84-32-253.ngrok-free.app',
     'https://1fb8-62-84-32-253.ngrok-free.app',
-    'https://boehmmm-pets-d2fb.twc1.net'
+    'https://boehmmm-pets-d2fb.twc1.net',
+    'https://boehmmm-pets-298f.twc1.net'
 ]
 
 
