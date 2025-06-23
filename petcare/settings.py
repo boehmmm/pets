@@ -138,13 +138,13 @@ CSRF_TRUSTED_ORIGINS = [
 
 
 
-EMAIL_HOST = 'smtp.rambler.ru'
+EMAIL_HOST = 'smtp.mail.ru'
 EMAIL_PORT = 465
-EMAIL_USE_TLS = False
-EMAIL_USE_SSL = True
-EMAIL_HOST_USER = 'carepets22@rambler.ru'
-EMAIL_HOST_PASSWORD = 'grHDLV-6R9eu7J'
-DEFAULT_FROM_EMAIL = 'carepets22@rambler.ru'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = 'carepets@mail.ru'
+EMAIL_HOST_PASSWORD = 'nA0ZtwcXLASMChb9KvdM'
+DEFAULT_FROM_EMAIL = 'carepets@mail.ru'
 
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 
