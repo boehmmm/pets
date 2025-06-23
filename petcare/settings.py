@@ -132,18 +132,19 @@ CSRF_TRUSTED_ORIGINS = [
     'https://fefb-62-84-32-253.ngrok-free.app',
     'https://e349-62-84-32-253.ngrok-free.app',
     'https://1fb8-62-84-32-253.ngrok-free.app',
+    'https://5948-38-244-142-100.ngrok-free.app',
     'https://boehmmm-pets-298f.twc1.net'
 ]
 
 
 
-EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_HOST = 'smtp.rambler.ru'
 EMAIL_PORT = 465
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
-EMAIL_HOST_USER = 'carepets@mail.ru'
-EMAIL_HOST_PASSWORD = 'djA5Gx6hg0Pey0zzLn3U'
-DEFAULT_FROM_EMAIL = 'carepets@mail.ru'
+EMAIL_HOST_USER = 'carepets22@rambler.ru'
+EMAIL_HOST_PASSWORD = 'grHDLV-6R9eu7J'
+DEFAULT_FROM_EMAIL = 'carepets22@rambler.ru'
 
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 
