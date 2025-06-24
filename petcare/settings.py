@@ -132,8 +132,7 @@ CSRF_TRUSTED_ORIGINS = [
     'https://fefb-62-84-32-253.ngrok-free.app',
     'https://e349-62-84-32-253.ngrok-free.app',
     'https://1fb8-62-84-32-253.ngrok-free.app',
-    'https://5948-38-244-142-100.ngrok-free.app',
-    'https://boehmmm-pets-298f.twc1.net'
+    'https://boehmmm-pets-5dfb.twc1.net'
 ]
 
 
