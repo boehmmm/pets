@@ -133,15 +133,16 @@ CSRF_TRUSTED_ORIGINS = [
     'https://e349-62-84-32-253.ngrok-free.app',
     'https://1fb8-62-84-32-253.ngrok-free.app',
     'https://5948-38-244-142-100.ngrok-free.app',
-    'https://boehmmm-pets-298f.twc1.net'
+    'https://boehmmm-pets-298f.twc1.net',
+    'https://boehmmm-pets-5dfb.twc1.net/'
 ]
 
 
 
 EMAIL_HOST = 'smtp.mail.ru'
 EMAIL_PORT = 465
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'carepets@mail.ru'
 EMAIL_HOST_PASSWORD = 'nA0ZtwcXLASMChb9KvdM'
 DEFAULT_FROM_EMAIL = 'carepets@mail.ru'
